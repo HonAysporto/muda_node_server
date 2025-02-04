@@ -4,12 +4,15 @@ const bcrypt = require("bcrypt")
 
 
 let userSchema = mongoose.Schema({
-    firstname : {type:String, required:true},
-    lastname :  {type:String, required:true},
-    email : {type:String, required:true, unique:true},
-    password: {type:String, required:true},
-    registrationDate : {type:Date, default:Date.now()}
-})
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    registrationDate: { type: Date, default: Date.now },
+    messages: [{
+        content: { type: String, required: true },
+        timestamp: { type: Date, default: Date.now },
+    }]
+}, { timestamps: true });
+
 
 
 
@@ -36,8 +39,7 @@ userSchema.methods.validatePassword = function(password, callback){
             callback(err, same)
         }else {
             next()
-        }
-        
+        } 
     })
 }
 
